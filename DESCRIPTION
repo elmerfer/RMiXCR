@@ -1,0 +1,24 @@
+Package: RMiXCR
+Type: Package
+Title: A easy wrapper for MiXCR software 
+Version: 0.1.0
+Author: Elmer A. Fernández
+Maintainer: Elmer A. Fernández <efernandez@cidie.ucc.edu.ar>
+Description: This package is intended to be a No Bioinformatic Need for T cell receptor enrichment estimation
+License: MIT
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ggplot2,
+    stringr,
+    openxlsx,
+    BiocParallel,
+    plyr,
+    Rsamtools,
+    GenomicRanges,
+    GenomicAlignments,
+    rtracklayer
+Suggests: 
+    knitr, 
+    rmarkdown
+RoxygenNote: 7.1.1
