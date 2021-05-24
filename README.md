@@ -11,7 +11,7 @@ devtools::install_github("elmerfer/RMiXCR")
 # MiXCR installation
 ```
 library(RMiXCR)
-InstallMiXCR()
+InstallMiXCR(where = "the/path")
 ```
 
 # Capabilities
