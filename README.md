@@ -7,7 +7,7 @@ It will provide
 * easy installation
 * RNAseq analysis for TCR from V, D, J genes rearrangements.
 * Couple with R data structures to facilitate its analysis
-* Improved export capabilities to Excel(r) files
+* Improved export capabilities to Excel &#U+00AE files
 * Analitical capabilities in estimation diversity, gene usage an several new statistical capabilities
 
 # Developers
