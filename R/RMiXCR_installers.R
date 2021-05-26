@@ -40,7 +40,7 @@ InstallMixCR <- function(where){
                 destfile = tmp.destfile)
   files <- zip::zip_list( tmp.destfile  )
   
-  zip::unzip(tmp.destfile, exdir = "/media/respaldo4t/Paquetes/Software")
+  zip::unzip(tmp.destfile, exdir = software$main)
   software$mixcr$path <- file.path(software$main, files$filename[1])
   software$mixcr$command <- file.path(software$main, files$filename[stringr::str_detect(files$filename,"mixcr.jar")])
   software$mixcr$base.args <- c(paste0("-Xmx4g"),paste0("-Xms3g"),paste0("-jar ",software$mixcr$command))
