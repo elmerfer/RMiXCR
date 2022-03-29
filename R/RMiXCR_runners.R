@@ -8,17 +8,28 @@
 
 #'RunMiXCR
 #'
-#'@param sbj full path to sample fastq R1 and R2. It should be named as xxxx_R1.fastq and xxxx_R2.fastq
+#'@param sbj (character) The full path name of the sbj.R1.fastq file (the paired read file should be named as sbj.R2.fastq)
 #'@param species any of "hsa","mmu" (human - mouse)
-#'@param assemblePartial (logical, dafault FALSE) if parial read should be assembled
-#'@param extendedAlignments (logical, dafault FALSE) if TCR extension alignment should be performed
+#'@param assemblePartial (logical, default FALSE) if partial read should be assembled (Perform two rounds of contig assembly)
+#'@param extendedAlignments (logical, default FALSE) if TCR extension alignment should be performed
 #'@param nThreads (integer) number of cores
 #'@export
 #'@return a list with clones, vmin, vdetails.clones, TRA.clones,TRB.clones,TRG.clones,TRD.clones data frames
 #'it also save an Excel file as full.path.sbj.alignments.vdjca.xlsx
+#'@usage
+#'\dontrun{
+#' fasta.file <- "/home/mysubjects/subject1.R1.fastq"
+#' RunMiXCR(sbj=fasta.file, 
+#'          species="hsa", #human
+#'          assemblePartial=FALSE, 
+#'          extendedAlignments=FALSE, 
+#'          nThreads = 6L #six cores
+#'          )
+#'
+#'}
 #'
 
-RunMiXCR <- function(sbj, species = c("hsa","mmu"), assemblePartial=FALSE,extendedAlignments=FALSE, nThreads){
+RunMiXCR <- function(sbj, species = c("hsa","mmu"), assemblePartial=TRUE,extendedAlignments=FALSE, nThreads){
   software <- RMiXCR:::.OpenConfigFile()  
   cat(paste0("\nAlignment"))
   if(missing(nThreads)){
@@ -49,7 +60,7 @@ RunMiXCR <- function(sbj, species = c("hsa","mmu"), assemblePartial=FALSE,extend
     cat("\nAssembling parial reads")
     apartial.input.file <- align.ofile
     apartial.out.file <- file.path(dirname(file1), paste0(basename(file1),".alignments.partial.vdjca")) 
-    for( i in 1:2){
+    for( i in 1:2){## perform two rounds of contig assembly 
       system2(command= "java",
               args = c(software$mixcr$base.args,
                        "assemblePartial",
@@ -58,7 +69,7 @@ RunMiXCR <- function(sbj, species = c("hsa","mmu"), assemblePartial=FALSE,extend
       apartial.input.file <- apartial.out.file
     }
     if(extendedAlignments){
-      cat("\nExtending TCR alñignments")
+      cat("\nExtending TCR alignments")
       system2(command= "java",
               args = c(software$mixcr$base.args,
                        "extendAlignments",
@@ -159,13 +170,24 @@ RunMiXCR <- function(sbj, species = c("hsa","mmu"), assemblePartial=FALSE,extend
   return(invisible(aux.files.subfix))      
 }
 
-#' RunMiXCR.RNAseqAlignment
-#'@param sbj full path to sample fastq R1 and R2. It should be named as xxxx_R1.fastq and xxxx_R2.fastq
+#' RNAseqAlignment
+#'@description  This function aligns raw sequencing reads to reference V, D, J and C genes of T- and B- cell receptors.
+#'@usage RunMiXCRseqAlignment(sbj, species = c("hsa","mmu","rat"), extendedAlignments=FALSE, nThreads = 4L)
+#'@param sbj full path to the subject.R1.fastq sample file. The paired read should be named subject.R2.fastq
 #'@param species any of "hsa","mmu", "rat" (human - mouse, rat)
-#'#'@param extendedAlignments (logical, default TRUE) if TCR extension alignment should be performed
+#'@param extendedAlignments (logical, default TRUE) if TCR extension alignment should be performed (in case of incomplete TCR aligments)
 #'@param nThreads (integer) number of cores (default 4, since it is suggested as the optimum value)
 #'@export
-#'@return the output file full path name.
+#'@return 
+#'It will generate file named "subject.R1.fastq.alignments.vdjca"
+#'the full path to this file is returned to be used as input to \code{\link{RunMiXCRseqClones}}
+#'@examples 
+#'/dontrun{
+#'       subj.file <- "/home/.../subject.R1.fastq"
+#'       out.vdja.file <- RunMiXCR(sbj = subj.file)
+#'       print(out.vdja.file)
+#'}
+#'
 #'
 RunMiXCRseqAlignment <- function(sbj, species = c("hsa","mmu","rat"), extendedAlignments=FALSE, nThreads = 4L){
   software <- RMiXCR:::.OpenConfigFile()  
@@ -230,7 +252,7 @@ RunMiXCRseqAlignment <- function(sbj, species = c("hsa","mmu","rat"), extendedAl
 
 #' RunMiXCRseq
 #' It runs the MiXCR package for RNAseq experiments
-#' @param sbj full path fastq(.gz) R1 sample
+#' @param sbj sbj (character) The full path name of the sbj.R1.fastq file (the paired read file should be named as sbj.R2.fastq)
 #' @param species character any of "hsa","mmu" (default hsa)
 #' @export
 #' @return if success, the it builds two files sbj.alignments.vdjca and sbj.clones.clns and return a vector with both full path file names
@@ -249,11 +271,20 @@ RunMiXCRseq <- function(sbj, species = c("hsa","mmu"), extendedAlignments = TRUE
   
 }
 
-#' RunMiXCR.RNAseqClones
-#'@param alignmentFile full path to sample fastq R1 and R2. It should be named as xxxx_R1.fastq and xxxx_R2.fastq
+#' RNAseqClones
+#' @description The assemble command builds clonotypes from alignments obtained with \code{\link{RunMiXCR}} or
+#' \code{\link{RunMiXCRseqAligment}}. Clonotypes assembly is performed for a chosen assembling feature (e.g. CDR3 by default).
+#'@param alignmentFile the full path name of the vdja file returned by \code{\link{RunMiXCRseqAligment}}
 #'@param nThreads (integer) number of cores (4 default as it is suggested as the optimal value)
 #'@export
-#'@return the full path name of the clones file
+#'@return it will generate a file names xxx.R1.fastq.clones.clns and it will return the full path to such file
+#'@exaples
+#'\dontrun{
+#'      subj.file <- "/home/.../subject.R1.fastq"
+#'       out.vdja.file <- RunMiXCR(sbj = subj.file)
+#'       clns.file <- RNAseqClones(out.vdja.file)
+#'       stropifnot(file.exists(clns.file)==TRUE)
+#'}
 #'
 RunMiXCRseqClones <- function(alignmentFile, nThreads = 4L){
   software <- RMiXCR:::.OpenConfigFile()  

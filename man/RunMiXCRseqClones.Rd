@@ -2,18 +2,19 @@
 % Please edit documentation in R/RMiXCR_runners.R
 \name{RunMiXCRseqClones}
 \alias{RunMiXCRseqClones}
-\title{RunMiXCR.RNAseqClones}
+\title{RNAseqClones}
 \usage{
 RunMiXCRseqClones(alignmentFile, nThreads = 4L)
 }
 \arguments{
-\item{alignmentFile}{full path to sample fastq R1 and R2. It should be named as xxxx_R1.fastq and xxxx_R2.fastq}
+\item{alignmentFile}{the full path name of the vdja file returned by \code{\link{RunMiXCRseqAligment}}}
 
 \item{nThreads}{(integer) number of cores (4 default as it is suggested as the optimal value)}
 }
 \value{
-the full path name of the clones file
+it will generate a file names xxx.R1.fastq.clones.clns and it will return the full path to such file
 }
 \description{
-RunMiXCR.RNAseqClones
+The assemble command builds clonotypes from alignments obtained with \code{\link{RunMiXCR}} or
+\code{\link{RunMiXCRseqAligment}}. Clonotypes assembly is performed for a chosen assembling feature (e.g. CDR3 by default).
 }

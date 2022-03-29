@@ -15,11 +15,25 @@
   return(paste0(jv, collapse = "."))
 }
 
-#' InstallMixCR
-#' @param where the path where I want to install
+#' InstallMiXCR
+#' @param where (character) the path to the directory where I want to install MiXCR
+#' @description The software MiXCR will be instaled at ./home/where/Software/mixcr-3.0.13/
+#' if the directory "where" do not exists, the it will be created as well as directory "Software/mixcr-3.0.13/" below "where"
+#' so it will look like
+#' 
+#' ./home/
+#' 
+#' ......where/
+#' 
+#' ...........Software/mixcr-3.0.13/ 
 #' @export
+#' @usage 
+#' \dontrun{
+#' InstallMiXCR("myfavoriteplace")
+#' }
+#' 
 
-InstallMixCR <- function(where){
+InstallMiXCR <- function(where){
   jv <- .CheckJava()
   message(paste0("\nJava version ",jv, "is OK"))
   software <- RMiXCR:::.OpenConfigFile()

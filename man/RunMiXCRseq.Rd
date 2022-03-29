@@ -8,7 +8,7 @@ It runs the MiXCR package for RNAseq experiments}
 RunMiXCRseq(sbj, species = c("hsa", "mmu"), extendedAlignments = TRUE)
 }
 \arguments{
-\item{sbj}{full path fastq(.gz) R1 sample}
+\item{sbj}{sbj (character) The full path name of the sbj.R1.fastq file (the paired read file should be named as sbj.R2.fastq)}
 
 \item{species}{character any of "hsa","mmu" (default hsa)}
 }

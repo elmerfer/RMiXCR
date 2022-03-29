@@ -2,26 +2,32 @@
 % Please edit documentation in R/RMiXCR_runners.R
 \name{RunMiXCRseqAlignment}
 \alias{RunMiXCRseqAlignment}
-\title{RunMiXCR.RNAseqAlignment}
+\title{RNAseqAlignment}
 \usage{
-RunMiXCRseqAlignment(
-  sbj,
-  species = c("hsa", "mmu", "rat"),
-  extendedAlignments = FALSE,
-  nThreads = 4L
-)
+RunMiXCRseqAlignment(sbj, species = c("hsa","mmu","rat"), extendedAlignments=FALSE, nThreads = 4L)
 }
 \arguments{
-\item{sbj}{full path to sample fastq R1 and R2. It should be named as xxxx_R1.fastq and xxxx_R2.fastq}
+\item{sbj}{full path to the subject.R1.fastq sample file. The paired read should be named subject.R2.fastq}
 
-\item{species}{any of "hsa","mmu", "rat" (human - mouse, rat)
-#'@param extendedAlignments (logical, default TRUE) if TCR extension alignment should be performed}
+\item{species}{any of "hsa","mmu", "rat" (human - mouse, rat)}
+
+\item{extendedAlignments}{(logical, default TRUE) if TCR extension alignment should be performed (in case of incomplete TCR aligments)}
 
 \item{nThreads}{(integer) number of cores (default 4, since it is suggested as the optimum value)}
 }
 \value{
-the output file full path name.
+It will generate file named "subject.R1.fastq.alignments.vdjca"
+the full path to this file is returned to be used as input to \code{\link{RunMiXCRseqClones}}
 }
 \description{
-RunMiXCR.RNAseqAlignment
+This function aligns raw sequencing reads to reference V, D, J and C genes of T- and B- cell receptors.
+}
+\examples{
+/dontrun{
+      subj.file <- "/home/.../subject.R1.fastq"
+      out.vdja.file <- RunMiXCR(sbj = subj.file)
+      print(out.vdja.file)
+}
+
+
 }

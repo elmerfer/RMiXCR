@@ -4,22 +4,25 @@
 \alias{RunMiXCR}
 \title{RunMiXCR}
 \usage{
-RunMiXCR(
-  sbj,
-  species = c("hsa", "mmu"),
-  assemblePartial = FALSE,
-  extendedAlignments = FALSE,
-  nThreads
-)
+\dontrun{
+fasta.file <- "/home/mysubjects/subject1.R1.fastq"
+RunMiXCR(sbj=fasta.file, 
+         species="hsa", #human
+         assemblePartial=FALSE, 
+         extendedAlignments=FALSE, 
+         nThreads = 6L #six cores
+         )
+
+}
 }
 \arguments{
-\item{sbj}{full path to sample fastq R1 and R2. It should be named as xxxx_R1.fastq and xxxx_R2.fastq}
+\item{sbj}{(character) The full path name of the sbj.R1.fastq file (the paired read file should be named as sbj.R2.fastq)}
 
 \item{species}{any of "hsa","mmu" (human - mouse)}
 
-\item{assemblePartial}{(logical, dafault FALSE) if parial read should be assembled}
+\item{assemblePartial}{(logical, default FALSE) if partial read should be assembled (Perform two rounds of contig assembly)}
 
-\item{extendedAlignments}{(logical, dafault FALSE) if TCR extension alignment should be performed}
+\item{extendedAlignments}{(logical, default FALSE) if TCR extension alignment should be performed}
 
 \item{nThreads}{(integer) number of cores}
 }
