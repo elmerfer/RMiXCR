@@ -11,7 +11,7 @@ RunMiXCRseqAlignment(sbj, species = c("hsa","mmu","rat"), extendedAlignments=FAL
 
 \item{species}{any of "hsa","mmu", "rat" (human - mouse, rat)}
 
-\item{extendedAlignments}{(logical, default TRUE) if TCR extension alignment should be performed (in case of incomplete TCR aligments)}
+\item{extendedAlignments}{(logical, default TRUE) if TCR extension alignment should be performed (in case of incomplete TCR alignments)}
 
 \item{nThreads}{(integer) number of cores (default 4, since it is suggested as the optimum value)}
 }

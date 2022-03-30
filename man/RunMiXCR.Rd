@@ -22,7 +22,7 @@ RunMiXCR(sbj=fasta.file,
 
 \item{assemblePartial}{(logical, default FALSE) if partial read should be assembled (Perform two rounds of contig assembly)}
 
-\item{extendedAlignments}{(logical, default FALSE) if TCR extension alignment should be performed}
+\item{extendedAlignments}{(logical, default TRUE) if TCR extension alignment should be performed (in case of incomplete TCR alignments)}
 
 \item{nThreads}{(integer) number of cores}
 }

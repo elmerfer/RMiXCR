@@ -1,6 +1,6 @@
 # RMiXCR
-The RMiXCR package is user friendly R interface to diminish the required bioinformaic skils for using the [MiXCR](https://mixcr.readthedocs.io/en/master/) software in the TCR recognition.
-It is mainly focused in their use in the analysis of RNAseq bulk samples, facilitating its installation and usability by minimizing the imputs parameters, thus providing transparency and reproducibility of the results.
+The RMiXCR package is user friendly R interface to diminish the required bioinformatic skills for using the [MiXCR](https://mixcr.readthedocs.io/en/master/) software in the TCR recognition.
+It is mainly focused in their use in the analysis of RNAseq bulk samples, facilitating its installation and usability by minimizing the inputs parameters, thus providing transparency and reproducibility of the results.
 
 # Package Installation
 ```
