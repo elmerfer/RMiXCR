@@ -198,6 +198,7 @@ RunMiXCRseqAlignment <- function(sbj, species = c("hsa","mmu","rat"), extendedAl
     message(paste0("\nRunning with ", nThreads, " Cores"))
   }
   species <- match.arg(species, c("hsa","mmu","rat") )
+  if(file.exists(sbj)==FALSE) stop(paste0("File not found : ",sbj))
   file1 <- sbj
   file2 <- stringr::str_replace(file1,".R1.fasta",".R2.fasta")
   align.ofile <- file.path(dirname(file1), paste0(basename(file1),".alignments.vdjca"))
@@ -272,7 +273,7 @@ RunMiXCRseqAlignment <- function(sbj, species = c("hsa","mmu","rat"), extendedAl
 #'}
 RunMiXCRseq <- function(sbj, species = c("hsa","mmu"), extendedAlignments = TRUE ){
   
-  out.alignment <- RunMiXCRseqAlignment(sbj = sbj, species = species, extendedAlignments = extendedAlignments)
+  out.alignment <- RunMiXCRseqAlignment(sbj = sbj, species = species[1], extendedAlignments = extendedAlignments)
   out.clones <- RunMiXCRseqClones(alignmentFile = out.alignment)
   out.exel.report <- RunMiXCRreport(out.clones,fileType = "Excel")
   files <- c(Aligment= out.alignment, Clones=out.clones, ClonesExcelReport=out.excel.report)
