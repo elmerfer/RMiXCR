@@ -3,7 +3,6 @@
 export(InstallMiXCR)
 export(RunMiXCR)
 export(RunMiXCRexportExcel)
-export(RunMiXCRreport)
 export(RunMiXCRseq)
 export(RunMiXCRseqAlignment)
 export(RunMiXCRseqClones)

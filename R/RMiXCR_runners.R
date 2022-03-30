@@ -399,10 +399,32 @@ RunMiXCRexportExcel <- function(clonsFile ){
 }
 
 #' RunMiXCRreport
-#' @param clonsFile the full path to the clone file
+#' @description 
+#' In order to export alignment results or clones from a binary file (.clns) to a human-readable tab or excel file
+#' RunMiXCRreport
+#' @usage 
+#' RunMiXCRreport(clonsFile, type = c("full","min"), otherFields, fileType = c("Excel","tab"))
+#' @param clonsFile the full path to the clone file (subjsect.R1.fastq.clones.clns) as returned by \code{\link{RunMiXCRseqClones}}
 #' @param type string "full" (default) or "min"
-#' @param otherFields other fileds (not implemented yet)
+#' @param otherFields other fields (not implemented yet)
+#' @details 
+#' The resulting tab-delimited text file or excel file (type param) will contain columns with different types of information. 
+#' If no options are specified (otherFields), the default set of columns - which is sufficient in most cases - will be exported. 
+#' The possible columns include. See details in [MiXCR main page](https://mixcr.readthedocs.io/en/master/export.html): 
+#' aligned sequences, qualities, all or just best hit for V, D, J and C genes, corresponding alignments, nucleotide and amino acid sequences of gene region present in sequence, etc. When exporting clones, the additional columns include: clone count, clone fraction etc.
+#' One can customize the list of fields that will be exported by passing parameters to export commands (not implemented yet). 
+#' 
 #' @export
+#'\dontrun{
+#'      subj.file <- "/home/.../subject.R1.fastq"
+#'       out.vdja.file <- RunMiXCR(sbj = subj.file)
+#'       clns.file <- RNAseqClones(out.vdja.file)
+#'       clone.excel.file <- RunMiXCRReport(clns.file, fileType = "Excel")
+#'       require(openxlsx)
+#'       CloneTable <- read.xlsx(clone.excel.file)
+#'       View(CloneTable)
+#'}
+#' 
 RunMiXCRreport <- function(clonsFile, type = c("full","min"), otherFields, fileType = c("Excel","tab")){
   software <- RMiXCR:::.OpenConfigFile()
   cat(paste0("\nExporting clones to Excel file"))
