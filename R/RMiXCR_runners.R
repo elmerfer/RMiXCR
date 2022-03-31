@@ -259,7 +259,7 @@ RunMiXCRseqAlignment <- function(sbj, species = c("hsa","mmu","rat"), extendedAl
 #' RunMiXCRseq(sbj, species = c("hsa","mmu"), extendedAlignments = TRUE )
 #' @param sbj sbj (character) The full path name of the sbj.R1.fastq file (the paired read file should be named as sbj.R2.fastq)
 #' @param species character any of "hsa","mmu" (default hsa)
-#' @param extendedAlignments default TRUE, 
+#' @param extendedAlignments default FALSE, 
 #' @export
 #' @return if success, the it builds three files sbj.alignments.vdjca and sbj.clones.clns and clones.xlsx and return a vector with the full path to files
 #' #' if fail, returns NA
@@ -271,7 +271,7 @@ RunMiXCRseqAlignment <- function(sbj, species = c("hsa","mmu","rat"), extendedAl
 #'       print(out.vdja.and.clone.files[2])#clones file path
 #'       print(out.vdja.and.clone.files[3])#clones excel report file path
 #'}
-RunMiXCRseq <- function(sbj, species = c("hsa","mmu"), extendedAlignments = TRUE ){
+RunMiXCRseq <- function(sbj, species = c("hsa","mmu"), extendedAlignments = FALSE ){
   
   out.alignment <- RunMiXCRseqAlignment(sbj = sbj, species = species[1], extendedAlignments = extendedAlignments)
   out.clones <- RunMiXCRseqClones(alignmentFile = out.alignment)
