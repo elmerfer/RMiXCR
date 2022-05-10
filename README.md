@@ -9,6 +9,7 @@ devtools::install_github("elmerfer/RMiXCR")
 ```
 
 # MiXCR installation
+You can install RMiXCR in your favorite directory "the/path". After installation, you will see in your file structire the following file path directory "the/path/RMiXCR""
 ```
 library(RMiXCR)
 InstallMiXCR(where = "the/path")
