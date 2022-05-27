@@ -1,7 +1,7 @@
 Package: RMiXCR
 Type: Package
-Title: A easy wrapper for MiXCR software 
-Version: 0.1.0
+Title: An easy wrapper for MiXCR software 
+Version: 0.1.1
 Author: Elmer A. Fernández
 Maintainer: Elmer A. Fernández <efernandez@cidie.ucc.edu.ar>
 Description: This package is intended to be a No Bioinformatic Need for T cell receptor enrichment estimation
