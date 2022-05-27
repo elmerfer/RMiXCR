@@ -286,7 +286,7 @@ RunMiXCRseq <- function(sbj, species = c("hsa","mmu"), extendedAlignments = FALS
   
 }
 
-#' RNAseqClones
+#' RunMiXCRseqClones
 #' @description The assemble command builds clonotypes from alignments obtained with \code{\link{RunMiXCR}} or
 #' \code{\link{RunMiXCRseqAligment}}. Clonotypes assembly is performed for a chosen assembling feature (e.g. CDR3 by default).
 #'@param alignmentFile the full path name of the vdja file returned by \code{\link{RunMiXCRseqAligment}}
@@ -328,7 +328,7 @@ RunMiXCRseqClones <- function(alignmentFile, nThreads = 4L){
   return(assemble.ofile)
 }
 
-#' RunMiXCR.ExportExcel
+#' RunMiXCRExportExcel
 #' @param clonsFile (string) the clone file. No IG clones
 #' @export
 RunMiXCRexportExcel <- function(clonsFile ){
