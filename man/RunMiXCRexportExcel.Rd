@@ -2,7 +2,7 @@
 % Please edit documentation in R/RMiXCR_runners.R
 \name{RunMiXCRexportExcel}
 \alias{RunMiXCRexportExcel}
-\title{RunMiXCR.ExportExcel}
+\title{RunMiXCRexportExcel}
 \usage{
 RunMiXCRexportExcel(clonsFile)
 }
@@ -10,5 +10,5 @@ RunMiXCRexportExcel(clonsFile)
 \item{clonsFile}{(string) the clone file. No IG clones}
 }
 \description{
-RunMiXCR.ExportExcel
+RunMiXCRexportExcel
 }

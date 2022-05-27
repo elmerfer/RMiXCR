@@ -2,7 +2,7 @@
 % Please edit documentation in R/RMiXCR_runners.R
 \name{RunMiXCRseqClones}
 \alias{RunMiXCRseqClones}
-\title{RNAseqClones}
+\title{RunMiXCRseqClones}
 \usage{
 RunMiXCRseqClones(alignmentFile, nThreads = 4L)
 }

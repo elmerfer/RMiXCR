@@ -11,7 +11,7 @@ RunMiXCRseq(sbj, species = c("hsa","mmu"), extendedAlignments = TRUE )
 
 \item{species}{character any of "hsa","mmu" (default hsa)}
 
-\item{extendedAlignments}{default TRUE,}
+\item{extendedAlignments}{default FALSE,}
 }
 \value{
 if success, the it builds three files sbj.alignments.vdjca and sbj.clones.clns and clones.xlsx and return a vector with the full path to files

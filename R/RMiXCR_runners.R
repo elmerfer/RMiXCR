@@ -328,9 +328,10 @@ RunMiXCRseqClones <- function(alignmentFile, nThreads = 4L){
   return(assemble.ofile)
 }
 
-#' RunMiXCRExportExcel
+#' RunMiXCRexportExcel
 #' @param clonsFile (string) the clone file. No IG clones
 #' @export
+#' 
 RunMiXCRexportExcel <- function(clonsFile ){
   software <- RMiXCR:::.OpenConfigFile()
   cat(paste0("\nExporting clones to Excel file"))
@@ -428,7 +429,6 @@ RunMiXCRexportExcel <- function(clonsFile ){
 #' The possible columns include. See details in [MiXCR main page](https://mixcr.readthedocs.io/en/master/export.html): 
 #' aligned sequences, qualities, all or just best hit for V, D, J and C genes, corresponding alignments, nucleotide and amino acid sequences of gene region present in sequence, etc. When exporting clones, the additional columns include: clone count, clone fraction etc.
 #' One can customize the list of fields that will be exported by passing parameters to export commands (not implemented yet). 
-#' 
 #' @export
 #'\dontrun{
 #'      subj.file <- "/home/.../subject.R1.fastq"
