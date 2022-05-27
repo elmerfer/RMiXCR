@@ -275,7 +275,7 @@ RunMiXCRseq <- function(sbj, species = c("hsa","mmu"), extendedAlignments = FALS
   
   out.alignment <- RunMiXCRseqAlignment(sbj = sbj, species = species[1], extendedAlignments = extendedAlignments)
   out.clones <- RunMiXCRseqClones(alignmentFile = out.alignment)
-  out.excel.report <- RunMiXCRreport(out.clones,fileType = "Excel")
+  out.excel.report <- Report(out.clones,fileType = "Excel")
   files <- c(Aligment= out.alignment, Clones=out.clones, ClonesExcelReport=out.excel.report)
   if(all(file.exists(files))==TRUE){
     message(paste0("\n files created",basename(files) ))
