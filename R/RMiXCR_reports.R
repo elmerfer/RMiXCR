@@ -46,6 +46,94 @@ Report <- function(clonsFile, type = c("full","min"), otherFields, fileType = c(
   }else{
     cat(paste0("\nExcel file failed"))
   }
-  return(stringr::str_replace(out.tab.file,".tab","xlsx"))
+  return(stringr::str_replace(out.tab.file,".tab",".xlsx"))
 }
+
+
+#' RunMiXCRexportExcel
+#' @param clonsFile (string) the clone file. No IG clones
+#' @export
+#' 
+RunMiXCRexportExcel <- function(clonsFile ){
+  software <- RMiXCR:::.OpenConfigFile()
+  cat(paste0("\nExporting clones to Excel file"))
+  # java -jar -Xmx6g $MIXCR_BIN_DIR/mixcr.jar exportClones --chains TCR ${OUTPUT_FILE}.clones.clns ${OUTPUT_FILE}.clones.txt
+  clonsFile <- clonsFile[stringr::str_detect(clonsFile,".clones.clns")]
+  if(length(clonsFile)<1){
+    stop("ERROR, clones.clns file not found")
+  }
+  if(file.exists(clonsFile)){
+    assemble.ofile <- clonsFile
+    st <- system2(command = "java",
+                  args = c(software$mixcr$base.args,
+                           "exportClones", "--chains TCR",
+                           assemble.ofile, 
+                           stringr::str_replace(assemble.ofile,".clns",".tab")
+                  ), stderr = TRUE )
+    if(any(stringr::str_detect(st, "ERROR"))){
+      cat("\nSomething HAPPEND on clns")
+    }
+    # java -jar -Xmx6g $MIXCR_BIN_DIR/mixcr.jar exportClones --chains TCR -p min ${OUTPUT_FILE}.clones.clns ${OUTPUT_FILE}.vmin.clones.txt
+    
+    st <- system2(command = "java",
+                  args = c(software$mixcr$base.args,
+                           "exportClones", "--chains TCR",
+                           "-p min",
+                           assemble.ofile, 
+                           stringr::str_replace(assemble.ofile,".clns",".vmin.tab")
+                  ),  stderr = TRUE)
+    if(any(stringr::str_detect(st, "ERROR"))){
+      cat("\nSomething HAPPEND on vmin")
+    }
+    gen.files <- stringr::str_replace(assemble.ofile,".clns",".vmin.tab")
+    # java -jar -Xmx6g $MIXCR_BIN_DIR/mixcr.jar exportClones -count -vHit -dHit -jHit -cHit -vHits -dHits -jHits -cHits -nFeature CDR3 -aaFeature CDR3 ${OUTPUT_FILE}.clones.clns ${OUTPUT_FILE}.vdetails.clones.txt
+    system2(command = "java",
+            args = c(software$mixcr$base.args,
+                     "exportClones", "-count",
+                     "-vhit", "-dhit", "-jHit", "-cHit", "-vHits", "-dHits", "-jHits", "-cHits",
+                     "-nFeature CDR3", "-aaFeature CDR3",
+                     assemble.ofile, 
+                     stringr::str_replace(assemble.ofile,".clns",".vdetails.clones.tab")
+            ), stderr = TRUE)
+    gen.files <- c(gen.files,stringr::str_replace(assemble.ofile,".clns",".vdetails.clones.tab"))
+    # java -jar -Xmx6g $MIXCR_BIN_DIR/mixcr.jar exportClones -count -vHit -dHit -jHit -cHit -vHits -dHits -jHits -cHits -nFeature CDR3 -c TRA -aaFeature CDR3 ${OUTPUT_FILE}.clones.clns ${OUTPUT_FILE}.TRA.clones.txt
+    chains <- c("IGH","IGK","TRA","TRB","TRD","TRG")
+    gen.files <- c(gen.files,unlist(lapply(chains, function(ch){
+      sys.out <- system2(command = "java",
+                         args = c(software$mixcr$base.args,
+                                  "exportClones", "-count",
+                                  "-vHit", "-dHit", "-jHit", "-cHit", "-vHits", "-dHits", "-jHits", "-cHits",
+                                  "-nFeature CDR3", paste0("-c ",ch), "-aaFeature CDR3",
+                                  assemble.ofile, 
+                                  stringr::str_replace(assemble.ofile,".clns",paste0(".",ch,".clones.tab"))
+                         ),stderr = TRUE)
+      ret.val <- stringr::str_replace(assemble.ofile,".clns",paste0(".",ch,".clones.tab"))
+      
+      attr(ret.val,"status") <- attr(sys.out,"status")
+      attr(ret.val,"errmsg") <- attr(sys.out,"errmsg")
+      return(ret.val)
+    })))
+    
+    
+    gen.files <- gen.files[file.exists(gen.files)]
+    to.excel <- lapply(gen.files, function(x){
+      return(read.table(x,h=T, sep="\t"))  
+    })
+    aux.files.subfix <- c(".tab","vmin.tab",".vdetails.clones.tab",".TRA.clones.tab",".TRB.clones.tab",".TRG.clones.tab",".TRD.clones.tab")
+    names(to.excel) <- c(stringr::str_remove(c("clones.tab","vmin.tab","vdetails.clones.tab","TRA.clones.tab","TRB.clones.tab","TRG.clones.tab","TRD.clones.tab"),".tab")
+    openxlsx::write.xlsx(to.excel, stringr::str_replace(assemble.ofile,".clns",".xlsx"))
+    file.remove(c(gen.files,stringr::str_replace(assemble.ofile,".clns",".tab")))
+    if(file.exists(stringr::str_replace(assemble.ofile,".clns",".xlsx"))){
+      message(paste0("\nFile saved as :",stringr::str_replace(assemble.ofile,".clns",".xlsx")))
+      return(invisible(aux.files.subfix))          
+    }
+    return(NA)
+    
+  }else{
+    message(paste0("\nFile not found :",clonsFile))
+    return(NA)
+  }
+  
+}
+
 
