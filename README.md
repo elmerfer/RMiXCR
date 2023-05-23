@@ -24,9 +24,9 @@ It will provide
 * Analitical capabilities in estimation diversity, gene usage an several new statistical capabilities
 
 # Developers
-* Elmer A. Fernàndez. (PhD), main author and idea. CIDIE-UCC-CONICET.
+* Elmer A. Fernàndez. (PhD), main author and idea. [FPM](https://fpmlab.org.ar/) - CONICET.
 * Guadalupe Nibeyro. developer
-* Veronica Baronetto developer, and analitical tools.
+* Veronica Baronetto developer and analitical tools.
 
 
 
